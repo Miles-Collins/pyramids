@@ -1,19 +1,24 @@
 package com.pyramids;
 
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class App {
 
-    // I've used two arrays here for O(1) reading of the pharaohs and pyramids.
-    // other structures or additional structures can be used
+    private static final String DATA_DIRECTORY = "src/main/java/com/pyramids";
+
     protected Pharaoh[] pharaohsArray;
     protected Pyramid[] pyramidsArray;
+    protected Map<Integer, Pharaoh> pharaohById;
+    protected Map<String, Pharaoh> pharaohByHieroglyphic;
+    protected Map<Integer, Pyramid> pyramidById;
+    protected Set<Integer> requestedPyramidId;
 
     public static void main(String[] args) {
-        // create and start the app
         App app = new App();
         app.start();
     }
