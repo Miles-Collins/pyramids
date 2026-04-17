@@ -1,7 +1,9 @@
 package com.pyramids;
 
-import java.util.*;
-import org.json.simple.*;
+import java.util.Scanner;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class App {
 
@@ -34,21 +36,18 @@ public class App {
     // constructor to initialize the app and read commands
     public App() {
         // read egyptian pharaohs
-        String pharaohFile
-                = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptianExample/pharaoh.json";
+        String pharaohFile = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptianExample/pharaoh.json";
         JSONArray pharaohJSONArray = JSONFile.readArray(pharaohFile);
 
         // create and intialize the pharaoh array
         initializePharaoh(pharaohJSONArray);
 
         // read pyramids
-        String pyramidFile
-                = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptian/pyramid.json";
+        String pyramidFile = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptian/pyramid.json";
         JSONArray pyramidJSONArray = JSONFile.readArray(pyramidFile);
 
         // create and initialize the pyramid array
         initializePyramid(pyramidJSONArray);
-
     }
 
     // initialize the pharaoh array
@@ -74,7 +73,6 @@ public class App {
             pharaohsArray[i] = pharaoh;
             pharaohById.put(id, pharaoh);
             pharaohByHieroglyphic.put(hieroglyphic, pharaoh);
-
         }
     }
 
@@ -114,7 +112,7 @@ public class App {
         Character command = '_';
         String rawInput = scan.nextLine();
 
-        if (rawInput.length() > 0) {
+        if (!rawInput.isEmpty()) {
             rawInput = rawInput.toLowerCase();
             command = rawInput.charAt(0);
         }
@@ -161,9 +159,7 @@ public class App {
     }
 
     private static void printMenuLine() {
-        System.out.println(
-                "--------------------------------------------------------------------------"
-        );
+        System.out.println("--------------------------------------------------------------------------");
     }
 
     // prints the menu
@@ -200,7 +196,8 @@ public class App {
 
     private void printRequestedPyramidReport() {
         System.out.println(
-                "This command will print a report about the requested pyramid, including its name, contributors, and the pharaohs that contributed to it."
+                "This command will print a report about the requested pyramid, including its "
+                + "name, contributors, and the pharaohs that contributed to it."
         );
     }
 }
