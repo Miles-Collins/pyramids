@@ -1,5 +1,9 @@
 package com.pyramids;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -23,6 +27,24 @@ public class App {
         app.start();
     }
 
+    public App() {
+        pharaohById = new LinkedHashMap<>();
+        pharaohByHieroglyphic = new LinkedHashMap<>();
+        pyramidById = new LinkedHashMap<>();
+        requestedPyramidId = new LinkedHashSet<>();
+
+        JSONArray pharaohJSONArray = JSONFile.readArray(resolveDataPath("pharaoh.json"));
+        initializePharaoh(pharaohJSONArray);
+
+        JSONArray pyramidJSONArray = JSONFile.readArray(resolveDataPath("pyramid.json"));
+        initializePyramid(pyramidJSONArray);
+    }
+
+    private String resolveDataPath(String fileName) {
+        Path filePath = Paths.get(DATA_DIRECTORY, fileName);
+        return filePath.toString();
+    }
+
     // main loop for app
     public void start() {
         Scanner scan = new Scanner(System.in);
@@ -38,27 +60,10 @@ public class App {
         }
     }
 
-    // constructor to initialize the app and read commands
-    public App() {
-        // read egyptian pharaohs
-        String pharaohFile = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptianExample/pharaoh.json";
-        JSONArray pharaohJSONArray = JSONFile.readArray(pharaohFile);
-
-        // create and intialize the pharaoh array
-        initializePharaoh(pharaohJSONArray);
-
-        // read pyramids
-        String pyramidFile = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptian/pyramid.json";
-        JSONArray pyramidJSONArray = JSONFile.readArray(pyramidFile);
-
-        // create and initialize the pyramid array
-        initializePyramid(pyramidJSONArray);
-    }
-
     // initialize the pharaoh array
     private void initializePharaoh(JSONArray pharaohJSONArray) {
         // create array and hash map
-        pharaohArray = new Pharaoh[pharaohJSONArray.size()];
+        pharaohsArray = new Pharaoh[pharaohJSONArray.size()];
 
         // initalize the array
         for (int i = 0; i < pharaohJSONArray.size(); i++) {
@@ -137,7 +142,7 @@ public class App {
                 printAllPharaohs();
                 break;
             case '2':
-                promptForPharaohId();
+                promptForPharaohId(scan);
                 break;
             case '3':
                 printAllPyramids();
@@ -184,10 +189,17 @@ public class App {
     }
 
     private void printAllPharaohs() {
-        System.out.println("This command will print all the pharaohs in the database.");
+        for (Pharaoh pharaoh : pharaohsArray) {
+            printMenuLine();
+            pharaoh.print();
+
+            if (pharaohsArray.length > 0) {
+                printMenuLine();
+            }
+        }
     }
 
-    private void promptForPharaohId() {
+    private void promptForPharaohId(Scanner scan) {
         System.out.println("Please enter the id of the pharaoh you want to see.");
     }
 
@@ -195,7 +207,7 @@ public class App {
         System.out.println("This command will print all the pyramids in the database.");
     }
 
-    private void promptForPyramidId() {
+    private void promptForPyramidId(Scanner scan) {
         System.out.println("Please enter the id of the pyramid you want to see.");
     }
 
