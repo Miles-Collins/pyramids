@@ -22,7 +22,7 @@ public class App {
     protected Map<Integer, Pharaoh> pharaohById;
     protected Map<String, Pharaoh> pharaohByHieroglyphic;
     protected Map<Integer, Pyramid> pyramidById;
-    protected Set<Integer> requestedPyramidId;
+    protected Set<Integer> requestedPyramidIds;
 
     public static void main(String[] args) {
         App app = new App();
@@ -33,7 +33,7 @@ public class App {
         pharaohById = new LinkedHashMap<>();
         pharaohByHieroglyphic = new LinkedHashMap<>();
         pyramidById = new LinkedHashMap<>();
-        requestedPyramidId = new LinkedHashSet<>();
+        requestedPyramidIds = new LinkedHashSet<>();
 
         JSONArray pharaohJSONArray = JSONFile.readArray(resolveDataPath("pharaoh.json"));
         initializePharaoh(pharaohJSONArray);
@@ -275,7 +275,7 @@ public class App {
                 return;
             }
 
-            requestedPyramidId.add(id);
+            requestedPyramidIds.add(id);
             printMenuLine();
             printPyramidDetails(pyramid);
             printMenuLine();
@@ -285,10 +285,23 @@ public class App {
     }
 
     private void printRequestedPyramidReport() {
-        System.out.println(
-                "This command will print a report about the requested pyramid, including its "
-                + "name, contributors, and the pharaohs that contributed to it."
-        );
+        if (requestedPyramidIds.isEmpty()) {
+            System.out.println("No pyramids have been requested yet.");
+            return;
+        }
+
+        printMenuLine();
+        System.out.println("Requested Pyramids");
+
+        for (Integer pyramidId : requestedPyramidIds) {
+            Pyramid pyramid = pyramidById.get(pyramidId);
+
+            if (pyramid != null) {
+                System.out.printf("%d\t%s\n", pyramid.getId(), pyramid.getName());
+            }
+        }
+
+        printMenuLine();
     }
 
     private void printPyramidSummary(Pyramid pyramid) {
