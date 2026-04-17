@@ -1,5 +1,6 @@
 package com.pyramids;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
@@ -14,6 +15,7 @@ import org.json.simple.JSONObject;
 public class App {
 
     private static final String DATA_DIRECTORY = "src/main/java/com/pyramids";
+    private static final String NESTED_DATA_DIRECTORY = "pyramids/src/main/java/com/pyramids";
 
     protected Pharaoh[] pharaohsArray;
     protected Pyramid[] pyramidsArray;
@@ -41,8 +43,19 @@ public class App {
     }
 
     private String resolveDataPath(String fileName) {
-        Path filePath = Paths.get(DATA_DIRECTORY, fileName);
-        return filePath.toString();
+        Path projectRootPath = Paths.get(DATA_DIRECTORY, fileName);
+
+        if (Files.exists(projectRootPath)) {
+            return projectRootPath.toString();
+        }
+
+        Path nestedRootPath = Paths.get(NESTED_DATA_DIRECTORY, fileName);
+
+        if (Files.exists(nestedRootPath)) {
+            return nestedRootPath.toString();
+        }
+
+        return projectRootPath.toString();
     }
 
     // main loop for app
@@ -114,7 +127,13 @@ public class App {
 
     // get a integer from a json object, and parse it
     private Integer toInteger(JSONObject o, String key) {
-        return ((Number) o.get(key)).intValue();
+        Object value = o.get(key);
+
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        }
+
+        return Integer.valueOf(value.toString());
     }
 
     // get first character from input
