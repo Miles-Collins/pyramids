@@ -122,6 +122,7 @@ public class App {
             // add a new pyramid to array
             Pyramid pyramid = new Pyramid(id, name, contributors);
             pyramidsArray[i] = pyramid;
+            pyramidById.put(id, pyramid);
         }
     }
 
@@ -320,6 +321,23 @@ public class App {
     }
 
     private void printPyramidDetails(Pyramid pyramid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.printf("Pyramid %s\n", pyramid.getName());
+        System.out.printf("\tid: %d\n", pyramid.getId());
+
+        int totalContribution = 0;
+
+        for (String contributorHash : pyramid.getContributors()) {
+            Pharaoh pharaoh = pharaohByHieroglyphic.get(contributorHash);
+            if (pharaoh == null) {
+                System.out.printf("\t- %s\n", contributorHash);
+                continue;
+            }
+
+            totalContribution += pharaoh.getContribution();
+            System.out.printf("\t- %s\n", pharaoh.getName());
+            System.out.printf("\t  gold: %d\n", pharaoh.getContribution());
+        }
+
+        System.out.printf("\ttotal contribution: %d gold coins\n", totalContribution);
     }
 }
