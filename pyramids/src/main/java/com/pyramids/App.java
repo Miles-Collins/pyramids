@@ -122,21 +122,28 @@ public class EgyptianPyramidsAppExample {
         return command;
     }
 
-    // print all pharaohs
-    private void printAllPharaoh() {
-        for (int i = 0; i < pharaohArray.length; i++) {
-            printMenuLine();
-            pharaohArray[i].print();
-            printMenuLine();
-        }
-    }
-
     private Boolean executeCommand(Scanner scan, Character command) {
         Boolean success = true;
 
+        if (scan == null || command == null) {
+            return false;
+        }
+
         switch (command) {
             case '1':
-                printAllPharaoh();
+                printAllPharaohs();
+                break;
+            case '2':
+                promptForPharaohId();
+                break;
+            case '3':
+                printAllPyramids();
+                break;
+            case '4':
+                promptForPyramidId();
+                break;
+            case '5':
+                printRequestedPyramidReport();
                 break;
             case 'q':
                 System.out.println("Thank you for using Nassef's Egyptian Pyramid App!");
