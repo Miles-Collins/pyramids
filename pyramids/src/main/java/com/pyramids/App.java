@@ -148,7 +148,7 @@ public class App {
                 printAllPyramids();
                 break;
             case '4':
-                promptForPyramidId();
+                promptForPyramidId(scan);
                 break;
             case '5':
                 printRequestedPyramidReport();
@@ -200,7 +200,23 @@ public class App {
     }
 
     private void promptForPharaohId(Scanner scan) {
-        System.out.println("Please enter the id of the pharaoh you want to see.");
+        System.out.print("Enter a Pharaoh's id: ");
+
+        try {
+            Integer id = Integer.valueOf(scan.nextLine());
+            Pharaoh pharaoh = pharaohById.get(id);
+
+            if (pharaoh != null) {
+                printMenuLine();
+                pharaoh.print();
+                printMenuLine();
+            } else {
+                System.out.println("Pharaoh not found.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid Pharaoh's id.");
+        }
     }
 
     private void printAllPyramids() {
@@ -208,7 +224,7 @@ public class App {
     }
 
     private void promptForPyramidId(Scanner scan) {
-        System.out.println("Please enter the id of the pyramid you want to see.");
+        System.out.print("Enter a Pyramid's id: ");
     }
 
     private void printRequestedPyramidReport() {
