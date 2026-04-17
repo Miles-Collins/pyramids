@@ -161,7 +161,18 @@ public class EgyptianPyramidsAppExample {
 
     // prints the menu
     public static void printMenu() {
-        System.out.println("---------------------------------------------------------------------------");
+        printMenuLine();
+        System.out.println("Nassef's Egyptian Pyramid App");
+        printMenuLine();
+        System.out.printf("Command\t\tDescription\n");
+        System.out.printf("-------\t\t-----------\n");
+        printMenuCommand('1', "List all the pharaohs");
+        printMenuCommand('2', "Display a specific pharaoh");
+        printMenuCommand('3', "List all the pyramids");
+        printMenuCommand('4', "Display a specific pyramid");
+        printMenuCommand('5', "Display a report about a specific pyramid");
+        printMenuCommand('q', "Quit");
+        printMenuLine();
     }
 
     private void printAllPharaohs() {
