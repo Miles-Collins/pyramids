@@ -1,4 +1,4 @@
-package com.egyptianExample;
+package com.pyramids;
 
 import java.util.*;
 import org.json.simple.*;
