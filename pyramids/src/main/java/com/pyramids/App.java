@@ -264,7 +264,24 @@ public class App {
     }
 
     private void promptForPyramidId(Scanner scan) {
-        System.out.print("Enter a Pyramid's id: ");
+        System.out.print("Enter a pyramid id: ");
+
+        try {
+            Integer id = Integer.valueOf(scan.nextLine());
+            Pyramid pyramid = pyramidById.get(id);
+
+            if (pyramid == null) {
+                System.out.println("No pyramid found with that id.");
+                return;
+            }
+
+            requestedPyramidId.add(id);
+            printMenuLine();
+            printPyramidDetails(pyramid);
+            printMenuLine();
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid pyramid id.");
+        }
     }
 
     private void printRequestedPyramidReport() {
@@ -272,5 +289,13 @@ public class App {
                 "This command will print a report about the requested pyramid, including its "
                 + "name, contributors, and the pharaohs that contributed to it."
         );
+    }
+
+    private void printPyramidSummary(Pyramid pyramid) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    private void printPyramidDetails(Pyramid pyramid) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
