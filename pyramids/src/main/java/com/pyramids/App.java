@@ -305,7 +305,18 @@ public class App {
     }
 
     private void printPyramidSummary(Pyramid pyramid) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        System.out.printf("Pyramid %s\n", pyramid.getName());
+        System.out.printf("\tid: %d\n", pyramid.getId());
+        System.out.println("\tcontributors:");
+
+        for (String contributorHash : pyramid.getContributors()) {
+            Pharaoh pharaoh = pharaohByHieroglyphic.get(contributorHash);
+            if (pharaoh != null) {
+                System.out.printf("\t- %s\n", pharaoh.getName());
+            } else {
+                System.out.printf("\t- %s\n", contributorHash);
+            }
+        }
     }
 
     private void printPyramidDetails(Pyramid pyramid) {
