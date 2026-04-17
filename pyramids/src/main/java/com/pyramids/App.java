@@ -3,16 +3,16 @@ package com.egyptianExample;
 import java.util.*;
 import org.json.simple.*;
 
-public class EgyptianPyramidsAppExample {
+public class App {
 
     // I've used two arrays here for O(1) reading of the pharaohs and pyramids.
     // other structures or additional structures can be used
-    protected Pharaoh[] pharaohArray;
-    protected Pyramid[] pyramidArray;
+    protected Pharaoh[] pharaohsArray;
+    protected Pyramid[] pyramidsArray;
 
     public static void main(String[] args) {
         // create and start the app
-        EgyptianPyramidsAppExample app = new EgyptianPyramidsAppExample();
+        App app = new App();
         app.start();
     }
 
@@ -32,7 +32,7 @@ public class EgyptianPyramidsAppExample {
     }
 
     // constructor to initialize the app and read commands
-    public EgyptianPyramidsAppExample() {
+    public App() {
         // read egyptian pharaohs
         String pharaohFile
                 = "/Users/jerom/Documents/GitHub/class-java/egyptian-pyramids/demo/src/main/java/com/egyptianExample/pharaoh.json";
@@ -78,7 +78,7 @@ public class EgyptianPyramidsAppExample {
     // initialize the pyramid array
     private void initializePyramid(JSONArray pyramidJSONArray) {
         // create array and hash map
-        pyramidArray = new Pyramid[pyramidJSONArray.size()];
+        pyramidsArray = new Pyramid[pyramidJSONArray.size()];
 
         // initalize the array
         for (int i = 0; i < pyramidJSONArray.size(); i++) {
@@ -96,22 +96,19 @@ public class EgyptianPyramidsAppExample {
             }
 
             // add a new pyramid to array
-            Pyramid p = new Pyramid(id, name, contributors);
-            pyramidArray[i] = p;
+            Pyramid pyramid = new Pyramid(id, name, contributors);
+            pyramidsArray[i] = pyramid;
         }
     }
 
     // get a integer from a json object, and parse it
     private Integer toInteger(JSONObject o, String key) {
-        String s = o.get(key).toString();
-        Integer result = Integer.parseInt(s);
-        return result;
+        return ((Number) o.get(key)).intValue();
     }
 
     // get first character from input
     private static Character menuGetCommand(Scanner scan) {
         Character command = '_';
-
         String rawInput = scan.nextLine();
 
         if (rawInput.length() > 0) {
