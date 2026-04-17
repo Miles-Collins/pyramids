@@ -70,8 +70,11 @@ public class App {
             String hieroglyphic = o.get("hieroglyphic").toString();
 
             // add a new pharoah to array
-            Pharaoh p = new Pharaoh(id, name, begin, end, contribution, hieroglyphic);
-            pharaohArray[i] = p;
+            Pharaoh pharaoh = new Pharaoh(id, name, begin, end, contribution, hieroglyphic);
+            pharaohsArray[i] = pharaoh;
+            pharaohById.put(id, pharaoh);
+            pharaohByHieroglyphic.put(hieroglyphic, pharaoh);
+
         }
     }
 
@@ -90,9 +93,9 @@ public class App {
             String name = o.get("name").toString();
             JSONArray contributorsJSONArray = (JSONArray) o.get("contributors");
             String[] contributors = new String[contributorsJSONArray.size()];
+
             for (int j = 0; j < contributorsJSONArray.size(); j++) {
-                String c = contributorsJSONArray.get(j).toString();
-                contributors[j] = c;
+                contributors[j] = contributorsJSONArray.get(j).toString();
             }
 
             // add a new pyramid to array
