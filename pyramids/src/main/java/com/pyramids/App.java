@@ -129,6 +129,10 @@ public class App {
     private Integer toInteger(JSONObject o, String key) {
         Object value = o.get(key);
 
+        if (value == null) {
+            throw new IllegalStateException("Missing required JSON field: " + key);
+        }
+
         if (value instanceof Number) {
             return ((Number) value).intValue();
         }
@@ -208,6 +212,11 @@ public class App {
     }
 
     private void printAllPharaohs() {
+        if (pharaohsArray == null || pharaohsArray.length == 0) {
+            System.out.println("No Pharaohs available.");
+            return;
+        }
+
         for (Pharaoh pharaoh : pharaohsArray) {
             printMenuLine();
             pharaoh.print();
@@ -239,7 +248,19 @@ public class App {
     }
 
     private void printAllPyramids() {
-        System.out.println("This command will print all the pyramids in the database.");
+        if (pyramidsArray == null || pyramidsArray.length == 0) {
+            System.out.println("No pyramids available.");
+            return;
+        }
+
+        for (Pyramid pyramid : pyramidsArray) {
+            printMenuLine();
+            printPyramidSummary(pyramid);
+        }
+
+        if (pyramidsArray.length > 0) {
+            printMenuLine();
+        }
     }
 
     private void promptForPyramidId(Scanner scan) {
